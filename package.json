@@ -1,0 +1,11 @@
+{
+  "name": "rxjs-store-logger",
+  "version": "1.0.0",
+  "description": "rxjs-easy-store logger middleware",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "seiyasolo",
+  "license": "ISC"
+}
