@@ -7,3 +7,6 @@
  import { registerMiddleware } from 'rxjs-easy-store'
  registerMiddleware([rxStoreLogger()])
 ```
+
+#### preview ####
+![Image text](./example.png)
