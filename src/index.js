@@ -32,12 +32,12 @@ function createLogger(options = {}) {
         }
 
         const started = timer.now();
-        const prevState = transformer(deepClone(getState()));
+        const prevState = transformer(getState());
 
         const returnValue = next(action, state);
         const took = timer.now() - started;
 
-        const nextState = transformer(deepClone(getState()));
+        const nextState = transformer(getState());
 
         // 格式化
         const time = new Date();
