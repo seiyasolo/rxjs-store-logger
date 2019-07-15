@@ -1,11 +1,23 @@
 {
-  "name": "rxjs-store-logger",
-  "version": "1.0.0",
+  "name": "rxjs-easy-store-logger",
+  "version": "1.0.2",
   "description": "rxjs-easy-store logger middleware",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config build/webpack.config.js"
   },
   "author": "seiyasolo",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "babel-loader": "^8.0.6",
+    "happypack": "^5.0.1",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6"
+  }
 }

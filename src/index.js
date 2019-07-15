@@ -1,13 +1,13 @@
-const repeat = (str, times) => (new Array(times + 1)).join(str);
-const pad = (num, maxLength) => repeat(`0`, maxLength - num.toString().length) + num;
-
-//使用新的性能API可以获得更好的精度（如果可用）
-const timer = typeof performance !== `undefined` && typeof performance.now === `function` ? performance : Date;
+import {
+    deepClone,
+    pad,
+    timer
+} from './util'
 
 function createLogger(options = {}) {
     return ({
         getState
-    }) => (next) => (action) => {
+    }) => (next) => (action, state) => {
         const {
             level, //级别
             logger, //console的API
@@ -23,21 +23,21 @@ function createLogger(options = {}) {
 
         // 如果控制台未定义则退出
         if (typeof console === `undefined`) {
-            return next(action);
+            return next(action, state);
         }
 
         // 如果谓词函数返回false，则退出
         if (typeof predicate === `function` && !predicate(getState, action)) {
-            return next(action);
+            return next(action, state);
         }
 
         const started = timer.now();
-        const prevState = transformer(getState());
+        const prevState = transformer(deepClone(getState()));
 
-        const returnValue = next(action);
+        const returnValue = next(action, state);
         const took = timer.now() - started;
 
-        const nextState = transformer(getState());
+        const nextState = transformer(deepClone(getState()));
 
         // 格式化
         const time = new Date();
@@ -57,13 +57,13 @@ function createLogger(options = {}) {
         }
 
         if (level) {
-            console[level](`%c prev state`, `color: #9E9E9E; font-weight: bold`, prevState);
-            console[level](`%c action`, `color: #03A9F4; font-weight: bold`, formattedAction);
-            console[level](`%c next state`, `color: #4CAF50; font-weight: bold`, nextState);
+            console[level](`%c prev state -->`, `color: #607D8B; font-weight: bold`, prevState);
+            console[level](`%c action -->`, `color: #4caf50; font-weight: bold`, formattedAction);
+            console[level](`%c next state -->`, `color: #ff9800; font-weight: bold`, nextState);
         } else {
-            console.log(`%c prev state`, `color: #9E9E9E; font-weight: bold`, prevState);
-            console.log(`%c action`, `color: #03A9F4; font-weight: bold`, formattedAction);
-            console.log(`%c next state`, `color: #4CAF50; font-weight: bold`, nextState);
+            console.log(`%c prev state -->`, `color: #607D8B; font-weight: bold`, prevState);
+            console.log(`%c action -->`, `color: #4caf50; font-weight: bold`, formattedAction);
+            console.log(`%c next state -->`, `color: #ff9800; font-weight: bold`, nextState);
         }
 
         try {
